@@ -38,7 +38,6 @@ const CompanyHome = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const fullText = "Welcome to Jass Fashion Mart";
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [speed, setSpeed] = useState(150);
@@ -58,6 +57,19 @@ const CompanyHome = () => {
     }
     return null;
   }, [token]);
+  const username = React.useMemo(() => {
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        return decoded.data.name;
+      } catch (error) {
+        console.error("Invalid token:", error);
+        return null;
+      }
+    }
+    return null;
+  }, [token]);
+  const fullText = `Welcome to ${username} Fashion Mart`;
 
   // Memoize the getProducts function
   const getProducts = useCallback(async () => {
