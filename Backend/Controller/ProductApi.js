@@ -1,5 +1,7 @@
 const multer = require("multer");
+const mongoose = require("mongoose");
 const { Reason, Product } = require("../Model/AddProduct");
+const { NewKeyListInstance } = require("twilio/lib/rest/api/v2010/account/newKey");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     if (file.fieldname === "productImg") {
@@ -73,15 +75,15 @@ const getAll = async (req, resp) => {
             },
           },
         ],
-        as:"user_Data"
+        as: "user_Data"
       },
     },
     {
       $unwind:
-        {
-          path: "$user_Data",
-          // preserveNullAndEmptyArrays: false
-        }
+      {
+        path: "$user_Data",
+        // preserveNullAndEmptyArrays: false
+      }
     },
   ]);
   console.log(data);
@@ -90,8 +92,54 @@ const getAll = async (req, resp) => {
     mesaage: "all products listing",
   });
 };
+const getallByUserId = async (req, resp) => {
+  const { userId } = req.query; // Or req.params.userId depending on your route
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return resp.status(400).json({ message: "Invalid userId" });
+  }
+
+  const data = await Product.aggregate([
+    {
+      $match: {
+        createdBy: new mongoose.Types.ObjectId(userId),
+      },
+    },
+    {
+      $sort: { _id: -1 },
+    },
+    {
+      $lookup: {
+        from: "users",
+        let: { user_id: "$createdBy" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$_id", "$$user_id"],
+              },
+            },
+          },
+        ],
+        as: "user_Data",
+      },
+    },
+    {
+      $unwind: {
+        path: "$user_Data",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+  ]);
+
+  return resp.status(200).json({
+    data: data,
+    message: "Filtered products by user",
+  });
+};
 module.exports = {
   addProduct,
   upload,
   getAll,
+  getallByUserId
 };
