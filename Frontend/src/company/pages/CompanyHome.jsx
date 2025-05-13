@@ -1,0 +1,294 @@
+// import React from 'react'
+// import { useDispatch } from 'react-redux'
+// import { useNavigate } from 'react-router-dom'
+// import { loginUser } from '../../redux/slice/userSlice'
+
+// const CompanyHome = () => {
+//   const Navigate = useNavigate()
+// const dispatch = useDispatch()
+//   return (
+//     <div>
+//       <h1>Welcome to Company Home Page</h1>
+//       <button onClick={()=>{localStorage.clear()
+//       dispatch(loginUser(''))
+//         Navigate("/login")
+//       }}>Log out</button>
+//     </div>
+//   )
+// }
+
+// export default CompanyHome
+
+import React, { useEffect, useState } from 'react';
+import "./comDashboard.css";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../../redux/slice/userSlice';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import fashion from "../../../images/bg_fashion.jpg"
+import fashionBackground from "../../../images/background_fashion.avif"
+import "bootstrap-icons/font/bootstrap-icons.css";
+
+const CompanyHome = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const fullText = "Welcome to Jass Fashion Mart";
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [speed, setSpeed] = useState(150); // Typing speed in ms (slower than before)
+  const [loopCount, setLoopCount] = useState(0);
+  useEffect(() => {
+    // Animation effect for the hero text
+    const heroText = document.querySelector('.hero-text');
+    if (heroText) {
+      setTimeout(() => {
+        heroText.style.opacity = '1';
+        heroText.style.transform = 'translateY(0)';
+      }, 300);
+    }
+  }, []);
+  useEffect(() => {
+    const handleTyping = () => {
+      if (!isDeleting && displayedText.length === fullText.length) {
+        // Pause at full text before deleting
+        setSpeed(1000); // Pause for 1 second
+        setIsDeleting(true);
+      } else if (isDeleting && displayedText === "") {
+        // Pause when empty before typing again
+        setSpeed(500); // Pause for 0.5 second
+        setIsDeleting(false);
+        setLoopCount(prev => prev + 1);
+      } else {
+        setSpeed(150); // Normal typing speed
+        setDisplayedText(isDeleting
+          ? prev => prev.slice(0, -1)
+          : prev => fullText.slice(0, prev.length + 1)
+        );
+      }
+    };
+
+    const timer = setTimeout(handleTyping, speed);
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, fullText, speed]);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch(loginUser(''));
+    navigate("/login");
+  };
+
+  return (
+    <div className="company-home ">
+      {/* Navbar */}
+  
+      <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: '#e5e25c' }}>
+        <div className="container-fluid d-flex justify-content-between align-items-center">
+
+          {/* Logo + Brand */}
+          <a className="navbar-brand d-flex align-items-center text-dark" href="#">
+            <img
+              src="/images/logo.jpg"
+              alt="Jass Fashion Mart"
+              width="50"
+              height="50"
+              className="d-inline-block align-top me-2 rounded-circle"
+            />
+            Jass Fashion Mart
+          </a>
+
+          {/* Toggle Button for mobile */}
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          {/* Navigation Links */}
+          <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul className="navbar-nav d-flex align-items-center gap-3">
+              <li className="nav-item">
+                <a className="nav-link text-dark" href="#">Home</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-dark" href="#about">About</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-dark" href="#services">Services</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-dark" href="/company/dashboard">Dashboard</a>
+              </li>
+              <li className="nav-item">
+                <button className="btn btn-dark text-light px-3 py-1" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </nav>
+
+      {/* Hero Section with Overlay */}
+      <section className="hero-section position-relative">
+        <div className="hero-image" style={{
+          backgroundImage: `url(${(fashionBackground)})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '100vh'
+        }}>
+          <div className="hero-overlay position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+          <div className="container position-relative h-100 d-flex align-items-center">
+            <div className="hero-text text-white text-center w-100" style={{
+              opacity: 0,
+              transform: 'translateY(20px)',
+              transition: 'opacity 1s ease, transform 1s ease'
+            }}>
+              <h1 className="display-3 fw-bold mb-4">
+                {displayedText}
+                {/* <span className="blinking-cursor">|</span> */}
+                <style jsx>{`
+       
+        @keyframes blink {
+          from, to { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
+              </h1>
+              <p className="lead mb-5">Your premier destination for the latest fashion trends</p>
+              <button className="btn darkyellow p-0">Learn More</button>
+              <button href="#services" className="btn btn-outline-light p-0 ms-2">Our Services</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-5 bg-light service-background">
+        <div className="container py-5 ">
+          <div className="row align-items-center">
+            <div className="col-lg-8 mb-4 mb-lg-0">
+              <h2 className="display-5 fw-bold mb-4 text-light">About Jass Fashion Mart</h2>
+              <p className="lead mb-4 text-light">
+                At Jass Fashion Mart, we believe that fashion is more than just clothing - it's a way to express yourself.
+                Since our founding in 2010, we've been committed to bringing the latest trends to fashion-forward individuals.
+              </p>
+              <p className='text-light'>
+                Our curated collection features high-quality materials, unique designs, and styles that stand the test of time.
+                Whether you're looking for casual wear, formal attire, or something in between, we have something for every occasion.
+              </p>
+            </div>
+            <div className="col-lg-4">
+              <img
+                src={fashion}
+                alt="About Jass Fashion Mart"
+                className="img-fluid rounded shadow"
+                style={{
+                  width: "300px",
+                  marginLeft: "50px",
+                  border: "none !important",
+                  boxShadow: "none !important",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="services" className="py-2 service-background">
+        <div className="container py-5 ">
+          <h2 className="text-center text-light display-5 fw-bold mb-5">What We Offer</h2>
+          <div className="row g-4">
+            <div className="col-md-4">
+              <div className="card h-100 border-0 shadow-sm">
+                <div className="card-body text-center p-4">
+                  <div className="icon-box bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-4" style={{ width: '70px', height: '70px', lineHeight: '70px' }}>
+                    {/* Ensure the icon name and CSS are correct */}
+                    <i className="bi bi-shop-window fs-3  text-dark"></i>
+                  </div>
+                  <h4 className="mb-3">Add Products</h4>
+                  <p className="text-muted">
+                    Easily add your fashion items to our platform with detailed descriptions and images.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="card h-100 border-0 shadow-sm">
+                <div className="card-body text-center p-4">
+                  <div className="icon-box bg-success bg-opacity-10 text-success rounded-circle mx-auto mb-4" style={{ width: '70px', height: '70px', lineHeight: '70px' }}>
+                    <i className="bi bi-people fs-3  text-dark"></i>
+                  </div>
+                  <h4 className="mb-3">Customer Insights</h4>
+                  <p className="text-muted">
+                    View detailed analytics about your customers and their purchasing behavior.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="card h-100 border-0 shadow-sm">
+                <div className="card-body text-center p-4">
+                  <div className="icon-box bg-info bg-opacity-10 text-info rounded-circle mx-auto mb-4" style={{ width: '70px', height: '70px', lineHeight: '70px' }}>
+                    <i className="bi bi-graph-up fs-3  text-dark"></i>
+                  </div>
+                  <h4 className="mb-3">Sales Analytics</h4>
+                  <p className="text-muted">
+                    Track your sales performance with comprehensive reports and analytics.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-dark text-white py-5">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-4 mb-4 mb-lg-0">
+              <h5 className="text-uppercase mb-4">Jass Fashion Mart</h5>
+              <p>
+                Bringing you the latest fashion trends with quality and style since 2010.
+              </p>
+              <div className="mt-4">
+                <a href="#" className="text-white me-3"><i className="bi bi-facebook"></i></a>
+                <a href="#" className="text-white me-3"><i className="bi bi-twitter"></i></a>
+                <a href="#" className="text-white me-3"><i className="bi bi-instagram"></i></a>
+                <a href="#" className="text-white"><i className="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+            <div className="col-lg-4 mb-4 mb-lg-0">
+              <h5 className="text-uppercase mb-4">Quick Links</h5>
+              <ul className="list-unstyled">
+                <li className="mb-2"><a href="#" className="text-white text-decoration-none">Home</a></li>
+                <li className="mb-2"><a href="#about" className="text-white text-decoration-none">About Us</a></li>
+                <li className="mb-2"><a href="#services" className="text-white text-decoration-none">Services</a></li>
+                <li className="mb-2"><a href="#" className="text-white text-decoration-none">Contact</a></li>
+              </ul>
+            </div>
+            <div className="col-lg-4">
+              <h5 className="text-uppercase mb-4">Contact Us</h5>
+              <address>
+                <p><i className="bi bi-geo-alt me-2 "></i> 123 Fashion Street, New York, NY</p>
+                <p><i className="bi bi-envelope me-2"></i> info@jassfashion.com</p>
+                <p><i className="bi bi-phone me-2"></i> +1 (234) 567-8900</p>
+              </address>
+            </div>
+          </div>
+          <hr className="my-4" />
+          <div className="text-center">
+            <p className="mb-0">&copy; {new Date().getFullYear()} Jass Fashion Mart. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default CompanyHome;
