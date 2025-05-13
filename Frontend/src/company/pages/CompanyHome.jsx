@@ -235,10 +235,10 @@ const CompanyHome = () => {
         <div className="container py-5 ">
           <div className="row align-items-center">
             <div className="col-lg-8 mb-4 mb-lg-0">
-              <h2 className="display-5 fw-bold mb-4 text-light">About Jass Fashion Mart</h2>
+              <h2 className="display-5 fw-bold mb-4 text-light">{`About ${username} Fashion Mart`}</h2>
               <p className="lead mb-4 text-light">
-                At Jass Fashion Mart, we believe that fashion is more than just clothing - it's a way to express yourself.
-                Since our founding in 2010, we've been committed to bringing the latest trends to fashion-forward individuals.
+                {`At  ${username} Fashion Mart, we believe that fashion is more than just clothing - it's a way to express yourself.
+                Since our founding in 2010, we've been committed to bringing the latest trends to fashion-forward individuals.`}
               </p>
               <p className='text-light'>
                 Our curated collection features high-quality materials, unique designs, and styles that stand the test of time.
@@ -265,7 +265,20 @@ const CompanyHome = () => {
       {/* Products card section*/}
       <section className='service-background'>
         <div className="container py-5">
-          <div className="row">
+          <div className="container-fluid">
+            {/* Logo & other elements */}
+            <div className="d-flex justify-content-end align-items-center">
+              <button
+                className="btn me-3 fw-bold"
+                style={{ backgroundColor: '#dfdf64', color: '#000', width: "150px" }}
+                onClick={() => navigate("/company/addProduct")} // Add your click handler
+              >
+                <i className="bi bi-plus-circle me-2"></i> Add Product
+              </button>
+              {/* Other buttons (e.g., Logout) */}
+            </div>
+          </div>
+          <div className="row mt-3">
             {data &&
               data?.map((item) => (
                 // Card
