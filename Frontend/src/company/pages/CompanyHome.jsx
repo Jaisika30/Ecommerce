@@ -20,6 +20,7 @@
 // export default CompanyHome
 
 import React, { useEffect, useState } from 'react';
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import "./comDashboard.css";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -28,17 +29,82 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import fashion from "../../../images/bg_fashion.jpg"
 import fashionBackground from "../../../images/background_fashion.avif"
 import "bootstrap-icons/font/bootstrap-icons.css";
+import axios from 'axios';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { jwtDecode } from "jwt-decode";
+import { useCallback } from 'react';
 
 const CompanyHome = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fullText = "Welcome to Jass Fashion Mart";
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [speed, setSpeed] = useState(150); // Typing speed in ms (slower than before)
+  const [speed, setSpeed] = useState(150);
   const [loopCount, setLoopCount] = useState(0);
+
+  // Memoize token and userId to prevent unnecessary recalculations
+  const token = localStorage.getItem("token");
+  const userId = React.useMemo(() => {
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        return decoded.data._id;
+      } catch (error) {
+        console.error("Invalid token:", error);
+        return null;
+      }
+    }
+    return null;
+  }, [token]);
+
+  // Memoize the getProducts function
+  const getProducts = useCallback(async () => {
+    try {
+      const resp = await axios.get(`http://localhost:8080/api/product/getallByUserId?userId=${userId}`);
+      return resp.data.data;
+    } catch (error) {
+      console.error("Error fetching products", error);
+      return [];
+    }
+  }, [userId]);
+
+  // Configure query to prevent unnecessary refetches
+  const { data } = useQuery({
+    queryKey: ["products", userId],
+    queryFn: getProducts,
+    enabled: !!userId, // Only fetch if userId exists
+    staleTime: 5 * 60 * 1000, // 5 minutes before data becomes stale
+  });
+
+  // Typing effect - optimized with useCallback
   useEffect(() => {
-    // Animation effect for the hero text
+    let timer;
+
+    const handleTyping = () => {
+      if (!isDeleting && displayedText.length === fullText.length) {
+        setSpeed(1000);
+        setIsDeleting(true);
+      } else if (isDeleting && displayedText === "") {
+        setSpeed(500);
+        setIsDeleting(false);
+        setLoopCount(prev => prev + 1);
+      } else {
+        setSpeed(150);
+        setDisplayedText(isDeleting
+          ? prev => prev.slice(0, -1)
+          : prev => fullText.slice(0, prev.length + 1)
+        );
+      }
+    };
+
+    timer = setTimeout(handleTyping, speed);
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, fullText, speed]);
+
+  // Hero text animation - empty dependency array means it runs once on mount
+  useEffect(() => {
     const heroText = document.querySelector('.hero-text');
     if (heroText) {
       setTimeout(() => {
@@ -47,40 +113,26 @@ const CompanyHome = () => {
       }, 300);
     }
   }, []);
-  useEffect(() => {
-    const handleTyping = () => {
-      if (!isDeleting && displayedText.length === fullText.length) {
-        // Pause at full text before deleting
-        setSpeed(1000); // Pause for 1 second
-        setIsDeleting(true);
-      } else if (isDeleting && displayedText === "") {
-        // Pause when empty before typing again
-        setSpeed(500); // Pause for 0.5 second
-        setIsDeleting(false);
-        setLoopCount(prev => prev + 1);
-      } else {
-        setSpeed(150); // Normal typing speed
-        setDisplayedText(isDeleting
-          ? prev => prev.slice(0, -1)
-          : prev => fullText.slice(0, prev.length + 1)
-        );
-      }
-    };
 
-    const timer = setTimeout(handleTyping, speed);
-    return () => clearTimeout(timer);
-  }, [displayedText, isDeleting, fullText, speed]);
-
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     localStorage.clear();
     dispatch(loginUser(''));
     navigate("/login");
-  };
+  }, [dispatch, navigate]);
+
+  // Memoize the product cards to prevent unnecessary re-renders
+  const productCards = React.useMemo(() => {
+    return data?.map((item) => (
+      <div className="col-md-12 col-lg-3 mb-4 mb-lg-0" key={item._id}>
+        {/* Your product card JSX */}
+      </div>
+    ));
+  }, [data]);
 
   return (
     <div className="company-home ">
       {/* Navbar */}
-  
+
       <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: '#e5e25c' }}>
         <div className="container-fluid d-flex justify-content-between align-items-center">
 
@@ -194,6 +246,102 @@ const CompanyHome = () => {
                 }}
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products card section*/}
+      <section className='service-background'>
+        <div className="container py-5">
+          <div className="row">
+            {data &&
+              data?.map((item) => (
+                // Card
+                <div className="col-md-12 col-lg-3 mb-4 mb-lg-0">
+                  <div className="card">
+                    <div className="d-flex justify-content-between p-3">
+                      <p className="lead mb-0 fw-bold">{item.name}</p>
+                      {/* <div
+                    className="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
+                    style={{ width: "35px", height: "35px" }}
+                  >
+                    
+                  </div> */}
+
+                    </div>
+                    <img
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        marginLeft: "30px",
+                      }}
+                      src={`http://localhost:8080/${item.productImg}`}
+                      className="card-img-top"
+                      alt="Laptop"
+                    />
+                    <div className="card-body">
+                      <div className="d-flex justify-content-between">
+                        {/* <p className="small">
+                      <a href="#!" className="text-muted">
+                      Category:{item.category}
+                      </a>
+                    </p> */}
+
+                        <div className="mb-2">
+                          <strong>Category:</strong> {item.category}
+                        </div>
+                        <p className="small text-danger">
+                          <s>{item.discount}%</s>
+                        </p>
+                      </div>
+
+                      <div className="d-flex justify-content-between mb-3">
+                        <div className="mb-2">
+                          <strong>Stock:</strong> {item.stock}
+                        </div>
+                        <div className="mb-2">
+                          <strong>Price:</strong> ${item.basePrice}
+                        </div>
+                      </div>
+
+                      <div className="  mb-2">
+                        <div className="mb-3">
+                          <strong>Description:</strong>
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>{item.description}</Tooltip>}
+                          >
+                            <p
+                              style={{
+                                fontSize: '14px',
+                                marginTop: '5px',
+                                cursor: 'pointer',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3, // Optional: Limit to 3 lines
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis'
+                              }}
+                            >
+                              {item.description.length > 30
+                                ? `${item.description.substring(0, 30)}...`
+                                : item.description}
+                            </p>
+                          </OverlayTrigger>
+                        </div>
+                        {/* <div className="ms-auto text-warning">
+                      <i className="fa fa-star"></i>
+                      <i className="fa fa-star"></i>
+                      <i className="fa fa-star"></i>
+                      <i className="fa fa-star"></i>
+                      <i className="fa fa-star"></i>
+                    </div> */}
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </section>
