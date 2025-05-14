@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 // import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -22,6 +23,11 @@ import swal from "sweetalert";
 // import { CiHeart } from "react-icons/ci";showData
 import { FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
+import fashion1 from "../../Frontend/images/Fashion1.jpeg.jpg"
+import fashion2 from "../../Frontend/images/Fashion2.jpeg.jpg"
+
+import fashion3 from "../../Frontend/images/Fashion3.jpeg.jpg"
+
 {
   /* <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" /> */
 }
@@ -342,32 +348,55 @@ const Home = () => {
           id="fashionCarousel"
           className="carousel slide"
           data-bs-ride="carousel"
-          style={{ marginTop: "" }}
+
         >
           <div className="carousel-inner">
             <div className="carousel-item active">
               <img
-                src="/images/fashion1.jpg"
+                src={fashion1}
                 className="d-block w-100"
                 alt="Fashion Image 1"
-                style={{ height: "600px", objectFit: "cover" }}
-              />
+                style={{
+                  height: "600px",
+                  objectFit: "cover",
+                  objectPosition: "center center", // Ensures the center of image is always visible
+                  width: "100%"
+                }} />
             </div>
             <div className="carousel-item">
-              <img
-                src="/images/fashion2.jpg"
-                className="d-block w-100"
-                alt="Fashion Image 2"
-                style={{ height: "600px", objectFit: "cover" }}
-              />
+              <div className="position-relative" style={{ height: "600px", overflow: "hidden" }}>
+
+                <img
+                  src={fashion2}
+                  className="d-block w-100"
+                  alt="Fashion Image 3"
+                  style={{
+                    minWidth: "100%",
+                    minHeight: "100%",
+                    width: "auto",
+                    height: "auto",
+                    maxWidth: "none",
+                    maxHeight: "none"
+                  }} />
+              </div>
             </div>
             <div className="carousel-item">
-              <img
-                src="/images/fashion3.jpg"
-                className="d-block w-100"
-                alt="Fashion Image 3"
-                style={{ height: "600px", objectFit: "cover" }}
-              />
+              <div className="position-relative" style={{ height: "600px", overflow: "hidden" }}>
+
+                <img
+                  src={fashion3}
+                  className="d-block w-100"
+                  alt="Fashion Image 3"
+                  style={{
+                    minWidth: "100%",
+                    minHeight: "100%",
+                    width: "auto",
+                    height: "auto",
+                    maxWidth: "none",
+                    maxHeight: "none"
+                  }} />
+              </div>
+
             </div>
           </div>
           <button
@@ -492,7 +521,27 @@ const Home = () => {
                         </div>
                         <div className="mb-3">
                           <strong>Description:</strong>
-                          <p style={{ fontSize: '14px', marginTop: '5px' }}>{item.description}</p>
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>{item.description}</Tooltip>}
+                          >
+                            <p
+                              style={{
+                                fontSize: '14px',
+                                marginTop: '5px',
+                                cursor: 'pointer',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3, // Optional: Limit to 3 lines
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis'
+                              }}
+                            >
+                              {item.description.length > 30
+                                ? `${item.description.substring(0, 30)}...`
+                                : item.description}
+                            </p>
+                          </OverlayTrigger>
                         </div>
                         {/* <div className="ms-auto text-warning">
                       <i className="fa fa-star"></i>
@@ -712,357 +761,48 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <footer className="text-white py-5" style={{ backgroundColor: "rgb(0, 36, 107)" }}>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-4 mb-4 mb-lg-0">
+              <h5 className="text-uppercase mb-4">Jass Fashion Mart</h5>
+              <p>
+                Bringing you the latest fashion trends with quality and style since 2010.
+              </p>
+              <div className="mt-4">
+                <a href="#" className="text-white me-3"><i className="bi bi-facebook"></i></a>
+                <a href="#" className="text-white me-3"><i className="bi bi-twitter"></i></a>
+                <a href="#" className="text-white me-3"><i className="bi bi-instagram"></i></a>
+                <a href="#" className="text-white"><i className="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+            <div className="col-lg-4 mb-4 mb-lg-0">
+              <h5 className="text-uppercase mb-4">Quick Links</h5>
+              <ul className="list-unstyled">
+                <li className="mb-2"><a href="#" className="text-white text-decoration-none">Home</a></li>
+                <li className="mb-2"><a href="#about" className="text-white text-decoration-none">About Us</a></li>
+                <li className="mb-2"><a href="#services" className="text-white text-decoration-none">Services</a></li>
+                <li className="mb-2"><a href="#" className="text-white text-decoration-none">Contact</a></li>
+              </ul>
+            </div>
+            <div className="col-lg-4">
+              <h5 className="text-uppercase mb-4">Contact Us</h5>
+              <address>
+                <p><i className="bi bi-geo-alt me-2 "></i> 123 Fashion Street, New York, NY</p>
+                <p><i className="bi bi-envelope me-2"></i> info@jassfashion.com</p>
+                <p><i className="bi bi-phone me-2"></i> +1 (234) 567-8900</p>
+              </address>
+            </div>
+          </div>
+          <hr className="my-4" />
+          <div className="text-center">
+            <p className="mb-0">&copy; {new Date().getFullYear()} Jass Fashion Mart. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </>
   );
 
-  //   return (
-  //     <>
-  //       <nav
-  //         className="navbar navbar-expand-lg"
-  //         style={{ backgroundColor: "#00246B" }} // Deep navy blue background
-  //       >
-  //         {/* Container wrapper */}
-  //         <div className="container-fluid">
-  //           {/* Toggle button */}
-  //           <button
-  //             className="navbar-toggler"
-  //             type="button"
-  //             data-bs-toggle="collapse"
-  //             data-bs-target="#navbarSupportedContent"
-  //             aria-controls="navbarSupportedContent"
-  //             aria-expanded="false"
-  //             aria-label="Toggle navigation"
-  //           >
-  //             <i className="fas fa-bars" style={{ color: "#CADCFC" }}></i> {/* Light blue icon */}
-  //           </button>
-
-  //           {/* Collapsible wrapper */}
-  //           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-  //             {/* Navbar brand */}
-  //             <a className="navbar-brand mt-2 mt-lg-0" href="#">
-  //               <img
-  //                 src="/images/logo.jpg"
-  //                 height="60"
-  //                 width={"60px"}
-  //                 alt="MDB Logo"
-  //                 loading="lazy"
-  //                 style={{ border: "2px solid #CADCFC", borderRadius: "50%" }} // Light blue border
-  //               />
-  //             </a>
-
-  //             {/* Left links */}
-  //             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-  //               <li className="nav-item">
-  //                 <a className="nav-link" href="/login" style={{ color: "#CADCFC" }}>
-  //                   Login
-  //                 </a>
-  //               </li>
-  //               <li className="nav-item">
-  //                 <a className="nav-link" href="/register" style={{ color: "#CADCFC" }}>
-  //                   Register
-  //                 </a>
-  //               </li>
-  //             </ul>
-  //           </div>
-
-  //           {/* Right elements */}
-  //           <div className="d-flex align-items-center ">
-  //             <span
-  //               className="position-absolute badge rounded-pill"
-  //               style={{
-  //                 top: "22px",
-  //                 right: "80px",
-  //                 backgroundColor: "#CADCFC", // Light blue badge
-  //                 color: "#00246B", // Deep navy blue text
-  //               }}
-  //             >
-  //               {selector?.length ?? "0"}
-  //             </span>
-  //             <a className="nav-link" href="/register">
-  //               <FaShoppingCart
-  //                 style={{ top: "38px", right: "25px", width: "60px", color: "#CADCFC" }}
-  //               /> {/* Light blue icon */}
-  //             </a>
-
-  //             {/* Avatar Dropdown */}
-  //             <div className="dropdown">
-  //               <a
-  //                 className="d-flex align-items-center hidden-arrow"
-  //                 href="#"
-  //                 id="navbarDropdownMenuAvatar"
-  //                 role="button"
-  //                 data-bs-toggle="dropdown"
-  //                 aria-expanded="false"
-  //               >
-  //                 <img
-  //                   src="/images/logo.jpg"
-  //                   className="rounded-circle"
-  //                   height="40"
-  //                   width={"40px"}
-  //                   alt="User Avatar"
-  //                   style={{ border: "2px solid #CADCFC" }} // Light blue border
-  //                 />
-  //               </a>
-  //               <ul
-  //                 className="dropdown-menu dropdown-menu-end"
-  //                 aria-labelledby="navbarDropdownMenuAvatar"
-  //               >
-  //                 <li>
-  //                   <button
-  //                     className="dropdown-item"
-  //                     onClick={() => setIsModalOneVisible(true)}
-  //                   >
-  //                     View Profile
-  //                   </button>
-  //                   <ProfileView
-  //                     show={isModalOneVisible}
-  //                     onHide={() => setIsModalOneVisible(false)}
-  //                   />
-  //                 </li>
-  //                 <li>
-  //                   <button
-  //                     className="dropdown-item"
-  //                     onClick={() => setIsModalTwoVisible(true)}
-  //                   >
-  //                     Edit Profile
-  //                   </button>
-  //                   <ProfileEdit
-  //                     show={isModalTwoVisible}
-  //                     onHide={() => setIsModalTwoVisible(false)}
-  //                   />
-  //                 </li>
-  //                 <li>
-  //                   <button
-  //                     className="dropdown-item"
-  //                     onClick={() => setIsModalThreeVisible(true)}
-  //                   >
-  //                     Change Password
-  //                   </button>
-  //                 </li>
-  //                 <li>
-  //                   <button className="dropdown-item" onClick={handlelogout}>
-  //                     Logout
-  //                   </button>
-  //                 </li>
-  //                 <li>
-  //                   <button
-  //                     className="dropdown-item"
-  //                     onClick={() => setIsModalFiveVisible(true)}
-  //                   >
-  //                     Delete Account
-  //                   </button>
-  //                   <DeleteAccount
-  //                     show={isModalFiveVisible}
-  //                     onHide={() => setIsModalFiveVisible(false)}
-  //                   />
-  //                 </li>
-  //               </ul>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </nav>
-
-  //       {/* Fashion Section - Carousel */}
-  //       {/* <section>
-  //         <div
-  //           id="fashionCarousel"
-  //           className="carousel slide"
-  //           data-bs-ride="carousel"
-  //           style={{ marginTop: "20px" }}
-  //         >
-  //           <div className="carousel-inner">
-  //             <div className="carousel-item active">
-  //               <img
-  //                 src="/images/fashion1.jpg"
-  //                 className="d-block w-100"
-  //                 alt="Fashion Image 1"
-  //                 style={{ height: "400px", objectFit: "cover" }}
-  //               />
-  //             </div>
-  //             <div className="carousel-item">
-  //               <img
-  //                 src="/images/fashion2.jpg"
-  //                 className="d-block w-100"
-  //                 alt="Fashion Image 2"
-  //                 style={{ height: "400px", objectFit: "cover" }}
-  //               />
-  //             </div>
-  //             <div className="carousel-item">
-  //               <img
-  //                 src="/images/fashion3.jpg"
-  //                 className="d-block w-100"
-  //                 alt="Fashion Image 3"
-  //                 style={{ height: "400px", objectFit: "cover" }}
-  //               />
-  //             </div>
-  //           </div>
-  //           <button
-  //             className="carousel-control-prev"
-  //             type="button"
-  //             data-bs-target="#fashionCarousel"
-  //             data-bs-slide="prev"
-  //           >
-  //             <span
-  //               className="carousel-control-prev-icon"
-  //               aria-hidden="true"
-  //             ></span>
-  //             <span className="visually-hidden">Previous</span>
-  //           </button>
-  //           <button
-  //             className="carousel-control-next"
-  //             type="button"
-  //             data-bs-target="#fashionCarousel"
-  //             data-bs-slide="next"
-  //           >
-  //             <span
-  //               className="carousel-control-next-icon"
-  //               aria-hidden="true"
-  //             ></span>
-  //             <span className="visually-hidden">Next</span>
-  //           </button>
-  //         </div>
-  //       </section> */}
-  //       <section>
-  //   <div
-  //     id="fashionCarousel"
-  //     className="carousel slide"
-  //     data-bs-ride="carousel"
-  //     data-bs-interval="3000" // Autoplay every 3 seconds
-  //     style={{ marginTop: "" }}
-  //   >
-  //     <div className="carousel-inner">
-  //       <div className="carousel-item active">
-  //         <img
-  //           src="\images\fashion.jpg"
-  //           className="d-block w-100"
-  //           alt="Fashion Image 1"
-  //           style={{ height: "500px", objectFit: "cover" }}
-  //         />
-  //       </div>
-  //       <div className="carousel-item">
-  //         <img
-  //           src="/images/fashion1.jpg"
-  //           className="d-block w-100"
-  //           alt="Fashion Image 2"
-  //           style={{ height: "500px", objectFit: "cover" }}
-  //         />
-  //       </div>
-  //       <div className="carousel-item">
-  //         <img
-  //           src="\images\fashion2.jpg"
-  //           className="d-block w-100"
-  //           alt="Fashion Image 3"
-  //           style={{ height: "500px", objectFit: "cover" }}
-  //         />
-  //       </div>
-  //     </div>
-  //     <button
-  //       className="carousel-control-prev"
-  //       type="button"
-  //       data-bs-target="#fashionCarousel"
-  //       data-bs-slide="prev"
-  //     >
-  //       <span
-  //         className="carousel-control-prev-icon"
-  //         aria-hidden="true"
-  //       ></span>
-  //       <span className="visually-hidden">Previous</span>
-  //     </button>
-  //     <button
-  //       className="carousel-control-next"
-  //       type="button"
-  //       data-bs-target="#fashionCarousel"
-  //       data-bs-slide="next"
-  //     >
-  //       <span
-  //         className="carousel-control-next-icon"
-  //         aria-hidden="true"
-  //       ></span>
-  //       <span className="visually-hidden">Next</span>
-  //     </button>
-  //   </div>
-  // </section>
-
-  //       {/* Product Listings */}
-  //       <section style={{ backgroundColor: "#eee" }}>
-  //         <div className="container py-5">
-  //           <div className="row">
-  //             {data &&
-  //               data?.map((item) => (
-  //                 <div className="col-md-12 col-lg-3 mb-4 mb-lg-0" key={item._id}>
-  //                   <div className="card">
-  //                     <div className="d-flex justify-content-between p-3">
-  //                       <p className="lead mb-0 fw-bold">{item.name}</p>
-  //                       <button
-  //                         style={{ width: "80px", height: "35px" }}
-  //                         type="button"
-  //                         data-mdb-button-init
-  //                         data-mdb-ripple-init
-  //                         className="btn btn-primary fs-6"
-  //                         data-mdb-ripple-color="dark"
-  //                       >
-  //                         Wishlist
-  //                       </button>
-  //                     </div>
-  //                     <img
-  //                       style={{
-  //                         width: "200px",
-  //                         height: "200px",
-  //                         marginLeft: "30px",
-  //                       }}
-  //                       src={`http://localhost:8080/${item.productImg}`}
-  //                       className="card-img-top"
-  //                       alt="Product"
-  //                     />
-  //                     <div className="card-body">
-  //                       <div className="d-flex justify-content-between">
-  //                         <p className="text-muted mb-0">
-  //                           Category: <span className="fw-bold">{item.category}</span>
-  //                         </p>
-  //                         <p className="small text-danger">
-  //                           <s>{item.discount}%</s>
-  //                         </p>
-  //                       </div>
-
-  //                       <div className="d-flex justify-content-between mb-3">
-  //                         <p className="text-muted mb-0">
-  //                           Stock: <span className="fw-bold">{item.stock}</span>
-  //                         </p>
-  //                         <p className="text-muted mb-0">
-  //                           Price: <span className="fw-bold">{item?.basePrice}</span>
-  //                         </p>
-  //                       </div>
-
-  //                       <div className="mb-2">
-  //                         <p>Added By: {item.user_Data.name}</p>
-  //                         <p style={{ fontSize: "14px" }}>
-  //                           <h6>Description:</h6> {item.description}
-  //                         </p>
-  //                       </div>
-  //                       <div className="d-flex flex-row">
-  //                         <button
-  //                           type="button"
-  //                           data-mdb-button-init
-  //                           data-mdb-ripple-init
-  //                           className="btn btn-danger flex-fill ms-1"
-  //                           onClick={() => {
-  //                             setShowData(item);
-  //                             setShow(true);
-  //                           }}
-  //                         >
-  //                           Add To Cart
-  //                         </button>
-  //                       </div>
-  //                     </div>
-  //                   </div>
-  //                 </div>
-  //               ))}
-  //           </div>
-  //         </div>
-  //       </section>
-
-  //     </>
-  //   );
 };
 
 export default Home;

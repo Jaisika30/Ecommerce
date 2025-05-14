@@ -32,11 +32,16 @@
 }
 
 .darkyellow {
-  background-color: #dfdf64 !important;
+  background-color: rgb(245 226 50) !important;
+}
+
+.btn-hero{
+  width: 200px;
+
 }
 
 button.darkyellow {
-  background-color: #dfdf64 !important;
+  background-color: rgb(245 226 50) !important;
   color: black;
   /* if needed */
 }
@@ -69,18 +74,28 @@ form {
 }
 
 .navbar {
-  background-color: #dfdf64;
-  border: 1px solid #e0e044;
+  background-color: rgb(245 226 50);
   box-shadow: 0 4px 8px 0 rgba(15, 5, 5, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .service-background {
-   background: linear-gradient(to bottom, #20201f, #20201f);
+  background: linear-gradient(to bottom, #20201f, #20201f);
 }
 
 .service-background .card {
-  background-color: #dfdf64;
+  background-color: rgb(245 226 50);
 }
+
 .field-bg {
-  background-color: rgba(2, 2, 2, 0.52); /* Same as #02020285 */
+  background-color: rgba(2, 2, 2, 0.52);
+  /* Same as #02020285 */
+}
+.hover-scale {
+  transition: all 0.3s ease-in-out;
+  transform-origin: center;
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
 }

@@ -145,7 +145,7 @@ const CompanyHome = () => {
     <div className="company-home ">
       {/* Navbar */}
 
-      <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: '#e5e25c' }}>
+      <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: 'rgb(245 226 50)' }}>
         <div className="container-fluid d-flex justify-content-between align-items-center">
 
           {/* Logo + Brand */}
@@ -211,7 +211,7 @@ const CompanyHome = () => {
               transform: 'translateY(20px)',
               transition: 'opacity 1s ease, transform 1s ease'
             }}>
-              <h1 className="display-3 fw-bold mb-4">
+              <h1 className="display-3 fw-bold mb-4" style={{ color: "rgb(245 226 50)" }}>
                 {displayedText}
                 {/* <span className="blinking-cursor">|</span> */}
                 <style jsx>{`
@@ -223,8 +223,10 @@ const CompanyHome = () => {
       `}</style>
               </h1>
               <p className="lead mb-5">Your premier destination for the latest fashion trends</p>
-              <button className="btn darkyellow p-0">Learn More</button>
-              <button href="#services" className="btn btn-outline-light p-0 ms-2">Our Services</button>
+              <div className="d-flex justify-content-center">
+                <button className="btn-hero btn darkyellow p-0 me-2">Learn More</button>
+                <button className="btn-hero btn btn-outline-light p-0">Our Services</button>
+              </div>
             </div>
           </div>
         </div>
@@ -235,7 +237,7 @@ const CompanyHome = () => {
         <div className="container py-5 ">
           <div className="row align-items-center">
             <div className="col-lg-8 mb-4 mb-lg-0">
-              <h2 className="display-5 fw-bold mb-4 text-light">{`About ${username} Fashion Mart`}</h2>
+              <h2 className="display-5 fw-bold mb-4" style={{ color: "rgb(245 226 50)" }}>{`About ${username} Fashion Mart`}</h2>
               <p className="lead mb-4 text-light">
                 {`At  ${username} Fashion Mart, we believe that fashion is more than just clothing - it's a way to express yourself.
                 Since our founding in 2010, we've been committed to bringing the latest trends to fashion-forward individuals.`}
@@ -265,19 +267,7 @@ const CompanyHome = () => {
       {/* Products card section*/}
       <section className='service-background'>
         <div className="container py-5">
-          <div className="container-fluid">
-            {/* Logo & other elements */}
-            <div className="d-flex justify-content-end align-items-center">
-              <button
-                className="btn me-3 fw-bold"
-                style={{ backgroundColor: '#dfdf64', color: '#000', width: "150px" }}
-                onClick={() => navigate("/company/addProduct")} // Add your click handler
-              >
-                <i className="bi bi-plus-circle me-2"></i> Add Product
-              </button>
-              {/* Other buttons (e.g., Logout) */}
-            </div>
-          </div>
+
           <div className="row mt-3">
             {data &&
               data?.map((item) => (
@@ -368,6 +358,19 @@ const CompanyHome = () => {
                 </div>
               ))}
           </div>
+          <div className="container-fluid">
+            {/* Logo & other elements */}
+            <div className="d-flex justify-content-center mt-3 align-items-center">
+              <button
+                className="btn me-3 fw-bold"
+                style={{ backgroundColor: 'rgb(245 226 50)', color: '#000', width: "150px" }}
+                onClick={() => navigate("/company/addProduct")} // Add your click handler
+              >
+                <i className="bi bi-plus-circle me-2"></i> Add Product
+              </button>
+              {/* Other buttons (e.g., Logout) */}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -377,7 +380,7 @@ const CompanyHome = () => {
           <h2 className="text-center text-light display-5 fw-bold mb-5">What We Offer</h2>
           <div className="row g-4">
             <div className="col-md-4">
-              <div className="card h-100 border-0 shadow-sm">
+              <div className="card h-100 border-0 shadow-sm shadow-sm hover-scale">
                 <div className="card-body text-center p-4">
                   <div className="icon-box bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-4" style={{ width: '70px', height: '70px', lineHeight: '70px' }}>
                     {/* Ensure the icon name and CSS are correct */}
@@ -391,7 +394,7 @@ const CompanyHome = () => {
               </div>
             </div>
             <div className="col-md-4">
-              <div className="card h-100 border-0 shadow-sm">
+              <div className="card h-100 border-0  hover-scale">
                 <div className="card-body text-center p-4">
                   <div className="icon-box bg-success bg-opacity-10 text-success rounded-circle mx-auto mb-4" style={{ width: '70px', height: '70px', lineHeight: '70px' }}>
                     <i className="bi bi-people fs-3  text-dark"></i>
@@ -404,7 +407,7 @@ const CompanyHome = () => {
               </div>
             </div>
             <div className="col-md-4">
-              <div className="card h-100 border-0 shadow-sm">
+              <div className="card h-100 border-0 shadow-sm hover-scale">
                 <div className="card-body text-center p-4">
                   <div className="icon-box bg-info bg-opacity-10 text-info rounded-circle mx-auto mb-4" style={{ width: '70px', height: '70px', lineHeight: '70px' }}>
                     <i className="bi bi-graph-up fs-3  text-dark"></i>
