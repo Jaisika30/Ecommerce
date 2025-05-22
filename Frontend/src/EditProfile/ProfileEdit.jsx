@@ -16,7 +16,7 @@ const ProfileEdit = (props) => {
 //   if(id == null){
 // <Navigate to={"/"}/>
 //   }
-  const BASE_URL = process.env.REACT_APP_API_URL;
+  const BASE_URL = process.env.VITE_API_URL;
 
   const updateDetails = async ({ id, data }) => {
     console.log(id);

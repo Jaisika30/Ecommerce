@@ -12,7 +12,7 @@ import { Navigate } from "react-router-dom";
 const DeleteAccount = (props) => {
   const [reason, setReason] = useState("");
   const [reasonId, setReasonId] = useState("");
-  const BASE_URL = process.env.REACT_APP_API_URL;
+  const BASE_URL = process.env.VITE_API_URL;
 
   // const detail= localStorage.getItem("details");
   // const detailData= JSON.parse(detail);

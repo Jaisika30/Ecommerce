@@ -34,7 +34,7 @@ const ProfileValidationSchema = Yup.object({
   //   .oneOf([yup.ref('pass'), null], 'Must match "password" field value'),
 });
 const Register = () => {
-  const BASE_URL = process.env.REACT_APP_API_URL;
+  const BASE_URL = process.env.VITE_API_URL;
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();

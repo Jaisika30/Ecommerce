@@ -62,7 +62,7 @@ const Home = () => {
   const [isModalFiveVisible, setIsModalFiveVisible] = React.useState(false);
   const [status, setStatus] = React.useState(false);
   const [detail, setDetail] = React.useState("");
-  const BASE_URL = process.env.REACT_APP_API_URL;
+  const BASE_URL = process.env.VITE_API_URL;
   const getProducts = async () => {
     const resp = await axios.get(`${BASE_URL}/api/product/getall`);
     console.log(resp);
