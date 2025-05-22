@@ -29,6 +29,8 @@ const AddToCart = () => {
   const [total, setTotal] = useState(0);
   const [quantity, setQuantity] = useState([]);
   const queryClient = useQueryClient();
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   // const [quantity, setQuantity] = useState([]);
 
   // // const [index,setIndex]= useState(0);
@@ -38,7 +40,7 @@ const AddToCart = () => {
   // console.log(token);
   const fetchItems = async () => {
     console.log("helllooooo");
-    const resp = await axios.get("http://localhost:8080/api/cart/getItems", {
+    const resp = await axios.get(`${BASE_URL}/api/cart/getItems`, {
       headers: { Authorization: `${token}` },
     });
     setUserId(resp.data.data[0].user_id);
@@ -96,7 +98,7 @@ const AddToCart = () => {
     }
     // console.log("quantity :>> ", subTotal);
     const result = await axios.post(
-      `http://localhost:8080/api/cart/update/${body.itemId}`,
+      `${BASE_URL}/api/cart/update/${body.itemId}`,
       { quantity: body.quantity }
       // { upsert: true }
     );
@@ -120,7 +122,7 @@ const AddToCart = () => {
   const removeItem = async (id) => {
     console.log("id :>> ", id);
     const resp = await axios.post(
-      `http://localhost:8080/api/cart/deleteCart/${id}`
+      `${BASE_URL}/api/cart/deleteCart/${id}`
     );
     console.log("resp :>> ", resp);
     return resp.data;
@@ -139,26 +141,26 @@ const AddToCart = () => {
     deleteItem.mutate(id);
   };
 
-  const handleAddList=async(body)=>{
+  const handleAddList = async (body) => {
     console.log('show :>> ', show);
-    if(show){
-      setShow((pre)=>!pre);
-      const resp = await axios.post("http://localhost:8080/api/wishlist/addWishlist",body)
+    if (show) {
+      setShow((pre) => !pre);
+      const resp = await axios.post(`${BASE_URL}/api/wishlist/addWishlist`, body)
       console.log('resp :>> ', resp);
       console.log('body :>> ', body);
     }
   }
   return (
-    <div style={{backgroundColor:"#00246B!important"}}>
+    <div style={{ backgroundColor: "#00246B!important" }}>
       <section className="h-100 gradient-custom">
         <div className="container py-5" >
           <div className="row d-flex justify-content-center my-4">
             <div className="col-md-8">
               <div className="card mb-4">
-                <div className="card-header py-3" style={{backgroundColor:"#00246B" , color:"white"}}>
+                <div className="card-header py-3" style={{ backgroundColor: "#00246B", color: "white" }}>
                   <h5 className="mb-0">Cart - 2 items</h5>
                 </div>
-                <div className="card-body" style={{backgroundColor:"#CADCFC"}}>
+                <div className="card-body" style={{ backgroundColor: "#CADCFC" }}>
                   {/* <!-- Single item --> */}
                   {data &&
                     data?.map((item) => (
@@ -171,7 +173,7 @@ const AddToCart = () => {
                               data-mdb-ripple-color="light"
                             >
                               <img
-                                src={`http://localhost:8080/${item?.productImg}`}
+                                src={`${BASE_URL}/${item?.productImg}`}
                                 className="w-100"
                                 alt="Blue Jeans Jacket"
                                 style={{ width: "50px", height: "150px" }}
@@ -203,9 +205,9 @@ const AddToCart = () => {
                               className="btn  btn-sm me-1  fs-1"
                               data-mdb-tooltip-init
                               title="Remove item"
-                              style={{ width: "80px", height: "50px", backgroundColor:"#00246B",color:"white" }}
+                              style={{ width: "80px", height: "50px", backgroundColor: "#00246B", color: "white" }}
                               onClick={() => handleDelete(item?._id)}
-                              //  class="fs-1"
+                            //  class="fs-1"
                             >
                               <MdDelete className="mb-5" />
                             </button>
@@ -218,15 +220,15 @@ const AddToCart = () => {
                               title="Move to the wish list"
                               style={{ width: "80px", height: "50px" }}
                               onClick={() => {
-                                let body={
-                                  userId:item?.user_id,
-                                  cartId:item?._id,
-                                  productId:item?.product_Info[0]._id
+                                let body = {
+                                  userId: item?.user_id,
+                                  cartId: item?._id,
+                                  productId: item?.product_Info[0]._id
                                 }
-                               
+
                                 handleAddList(body)
                               }}
-                              // class="fs-1 btn-danger"
+                            // class="fs-1 btn-danger"
                             >
                               {show && show ? (
                                 <CiHeart className="mb-5" />
@@ -257,8 +259,8 @@ const AddToCart = () => {
                                   };
                                   handleMinus(body);
                                 }}
-                                style={{backgroundColor:"#00246B",color:"white"}}
-                                // onClick={() => dispatch(decrement(item?._id))}
+                                style={{ backgroundColor: "#00246B", color: "white" }}
+                              // onClick={() => dispatch(decrement(item?._id))}
                               >
                                 <FaMinus />
                               </button>
@@ -272,8 +274,8 @@ const AddToCart = () => {
                                   max={item?.product_Info[0].stock}
                                   type="text"
                                   className="form-control"
-                                  style={{backgroundColor:"#CADCFC" , color:"#00246B",borderColor:"#00246B"}}
-                                  // onChange={() => setQuantity(quantity + 1)}
+                                  style={{ backgroundColor: "#CADCFC", color: "#00246B", borderColor: "#00246B" }}
+                                // onChange={() => setQuantity(quantity + 1)}
                                 />
                                 <label className="form-label" for="form1">
                                   Quantity
@@ -298,7 +300,7 @@ const AddToCart = () => {
                                   handleAdd(body);
                                 }}
                                 style={
-                                  {backgroundColor:"#00246B",color:"white"}
+                                  { backgroundColor: "#00246B", color: "white" }
                                 }
                               >
                                 <FaPlus />
@@ -436,25 +438,25 @@ const AddToCart = () => {
             </div>
             <div className="col-md-4" >
               <div >
-                <div class="card mb-4" style={{backgroundColor:"#CADCFC"}}>
-                  <div class="card-header py-3"  style={{backgroundColor:"#00246B" , color:"white"}}>
+                <div class="card mb-4" style={{ backgroundColor: "#CADCFC" }}>
+                  <div class="card-header py-3" style={{ backgroundColor: "#00246B", color: "white" }}>
                     <h5 class="mb-0">Summary</h5>
                   </div>
                   <div class="card-body" >
                     <ul class="list-group list-group-flush" >
-                      <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"style={{backgroundColor:"#CADCFC"}}>
+                      <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0" style={{ backgroundColor: "#CADCFC" }}>
                         Total Quantitiy
                         <span>{totalQuantity}</span>
                       </li>
 
-                      <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3"style={{backgroundColor:"#CADCFC"}}>
-                       
+                      <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3" style={{ backgroundColor: "#CADCFC" }}>
+
                         <div>
                           <strong>Total amount</strong>
                         </div>
                         <span>
-                        <br/>
-                          <strong> <FaRupeeSign/>{total}</strong>
+                          <br />
+                          <strong> <FaRupeeSign />{total}</strong>
                         </span>
                       </li>
                     </ul>
@@ -464,9 +466,9 @@ const AddToCart = () => {
                       data-mdb-button-init
                       data-mdb-ripple-init
                       class="btn  btn-lg btn-block"
-                      onClick={()=>handleClick(userId)}
+                      onClick={() => handleClick(userId)}
                       style={
-                        {backgroundColor:"#00246B",color:"white"}
+                        { backgroundColor: "#00246B", color: "white" }
                       }
                     >
                       Go to checkout

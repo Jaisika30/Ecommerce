@@ -10,6 +10,7 @@ export const CheckOutForm = (props) => {
   console.log("userId :>> ", userId);
   const stripe = useStripe();
   const elements = useElements();
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
 
   //   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -23,13 +24,13 @@ export const CheckOutForm = (props) => {
       // alert(`your token id is ${token?.token?.id}`);
       const tokenId = token?.token?.id;
       const ans = await axios.post(
-        "http://localhost:8080/api/payment/addcard",
+        `${BASE_URL}/api/payment/addcard`,
         { tokenId, userId }
       );
       console.log("ans :>> ", ans.data.cardId);
       const cardId = ans.data.cardId;
       const result = await axios.post(
-        "http://localhost:8080/api/payment/paymentIntent",
+        `${BASE_URL}/api/payment/paymentIntent`,
         { amount, cardId, userId }
       );
       console.log('result :>> ', result);

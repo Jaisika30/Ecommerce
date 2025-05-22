@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
 
 const verifyotp = async (otp) => {
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
   console.log(otp);
   const id = localStorage.getItem("id");
   console.log(id);
   const resp = await axios.post(
-    `http://localhost:8080/api/user/verify/${id}`,
+    `${BASE_URL}/api/user/verify/${id}`,
     otp
   );
   console.log(resp);
@@ -56,14 +57,15 @@ const VerifyOtp = () => {
           value={values.otp}
         /> */}
         <OtpInput
-        className="mx-3"
+          className="mx-3"
           value={values.otp}
           onChange={handleChange}
           numInputs={4}
           // renderSeparator={<span> * </span>}
           renderInput={(props) => <input {...props}
-          style={{width:"50px" ,height:"50px",marginLeft:"20px"
-          }} />}
+            style={{
+              width: "50px", height: "50px", marginLeft: "20px"
+            }} />}
         />
         <button className="submit" type="submit">
           Submit

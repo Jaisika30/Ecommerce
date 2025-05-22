@@ -34,13 +34,15 @@ const ProfileValidationSchema = Yup.object({
   //   .oneOf([yup.ref('pass'), null], 'Must match "password" field value'),
 });
 const Register = () => {
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const mutation = useMutation({
     mutationFn: (newUser) =>
-      axios.post("http://localhost:8080/api/user/register", newUser),
-   
+      axios.post(`${BASE_URL}/api/user/register`, newUser),
+
   });
 
   const { handleChange, handleSubmit, values, errors, touched, setFieldValue } =
@@ -236,187 +238,187 @@ const Register = () => {
      // Set a maximum width for the form
   }}
 > */}
-  <form className="form" onSubmit={handleSubmit}  style={{
-    // backgroundColor: "#CADCFC",
-    maxWidth: "600px",
-    marginLeft:"350px" // Set a maximum width for the form
-  }}>
-    <p className="title text-center mb-4 fs-4 fw-bold" style={{ color: "#00246B" }}>
-      Register
-    </p>
+      <form className="form" onSubmit={handleSubmit} style={{
+        // backgroundColor: "#CADCFC",
+        maxWidth: "600px",
+        marginLeft: "350px" // Set a maximum width for the form
+      }}>
+        <p className="title text-center mb-4 fs-4 fw-bold" style={{ color: "#00246B" }}>
+          Register
+        </p>
 
-    <div className="mb-3">
-      <label className="form-label" style={{ color: "#00246B" }}>
-        Name
-      </label>
-      <input
-        type="text"
-        name="name"
-        className="form-control"
-        value={values.name}
-        onChange={handleChange}
-        required
-      />
-      {errors.name && touched.name && (
-        <span className="text-danger small">{errors.name}</span>
-      )}
-    </div>
+        <div className="mb-3">
+          <label className="form-label" style={{ color: "#00246B" }}>
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            className="form-control"
+            value={values.name}
+            onChange={handleChange}
+            required
+          />
+          {errors.name && touched.name && (
+            <span className="text-danger small">{errors.name}</span>
+          )}
+        </div>
 
-    <div className="mb-3">
-      <label className="form-label" style={{ color: "#00246B" }}>
-        Email
-      </label>
-      <input
-        type="email"
-        name="email"
-        className="form-control"
-        value={values.email}
-        onChange={handleChange}
-        required
-      />
-      {errors.email && touched.email && (
-        <span className="text-danger small">{errors.email}</span>
-      )}
-    </div>
+        <div className="mb-3">
+          <label className="form-label" style={{ color: "#00246B" }}>
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            className="form-control"
+            value={values.email}
+            onChange={handleChange}
+            required
+          />
+          {errors.email && touched.email && (
+            <span className="text-danger small">{errors.email}</span>
+          )}
+        </div>
 
-    <div className="mb-3">
-      <label className="form-label" style={{ color: "#00246B" }}>
-        Address
-      </label>
-      <input
-        type="text"
-        name="address"
-        className="form-control"
-        value={values.address}
-        onChange={handleChange}
-        required
-      />
-      {errors.address && touched.address && (
-        <span className="text-danger small">{errors.address}</span>
-      )}
-    </div>
+        <div className="mb-3">
+          <label className="form-label" style={{ color: "#00246B" }}>
+            Address
+          </label>
+          <input
+            type="text"
+            name="address"
+            className="form-control"
+            value={values.address}
+            onChange={handleChange}
+            required
+          />
+          {errors.address && touched.address && (
+            <span className="text-danger small">{errors.address}</span>
+          )}
+        </div>
 
-    <div className="mb-3">
-      <label className="form-label" style={{ color: "#00246B" }}>
-        Password
-      </label>
-      <input
-        type="password"
-        name="password"
-        className="form-control"
-        value={values.password}
-        onChange={handleChange}
-        required
-      />
-      {errors.password && touched.password && (
-        <span className="text-danger small">{errors.password}</span>
-      )}
-    </div>
+        <div className="mb-3">
+          <label className="form-label" style={{ color: "#00246B" }}>
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            className="form-control"
+            value={values.password}
+            onChange={handleChange}
+            required
+          />
+          {errors.password && touched.password && (
+            <span className="text-danger small">{errors.password}</span>
+          )}
+        </div>
 
-    <div className="mb-3">
-      <label className="form-label d-block" style={{ color: "#00246B" }}>
-        Gender:
-      </label>
-      <div className="form-check form-check-inline">
-        <input
-          type="radio"
-          name="gender"
-          id="male"
-          className="form-check-input"
-          value="Male"
-          onChange={handleChange}
-          checked={values.gender === "Male"}
-        />
-        <label htmlFor="male" className="form-check-label" style={{ color: "#00246B" }}>
-          Male
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          type="radio"
-          name="gender"
-          id="female"
-          className="form-check-input"
-          value="Female"
-          onChange={handleChange}
-          checked={values.gender === "Female"}
-        />
-        <label htmlFor="female" className="form-check-label" style={{ color: "#00246B" }}>
-          Female
-        </label>
-      </div>
-      {errors.gender && touched.gender && (
-        <span className="text-danger small d-block">{errors.gender}</span>
-      )}
-    </div>
+        <div className="mb-3">
+          <label className="form-label d-block" style={{ color: "#00246B" }}>
+            Gender:
+          </label>
+          <div className="form-check form-check-inline">
+            <input
+              type="radio"
+              name="gender"
+              id="male"
+              className="form-check-input"
+              value="Male"
+              onChange={handleChange}
+              checked={values.gender === "Male"}
+            />
+            <label htmlFor="male" className="form-check-label" style={{ color: "#00246B" }}>
+              Male
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              type="radio"
+              name="gender"
+              id="female"
+              className="form-check-input"
+              value="Female"
+              onChange={handleChange}
+              checked={values.gender === "Female"}
+            />
+            <label htmlFor="female" className="form-check-label" style={{ color: "#00246B" }}>
+              Female
+            </label>
+          </div>
+          {errors.gender && touched.gender && (
+            <span className="text-danger small d-block">{errors.gender}</span>
+          )}
+        </div>
 
-    <div className="mb-3">
-      <label className="form-label d-block" style={{ color: "#00246B" }}>
-        Role:
-      </label>
-      <div className="form-check form-check-inline">
-        <input
-          type="radio"
-          name="role"
-          id="admin"
-          className="form-check-input"
-          value="1"
-          onChange={handleChange}
-          checked={values.role === "1"}
-        />
-        <label htmlFor="admin" className="form-check-label" style={{ color: "#00246B" }}>
-          Admin
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          type="radio"
-          name="role"
-          id="company"
-          className="form-check-input"
-          value="3"
-          onChange={handleChange}
-          checked={values.role === "3"}
-        />
-        <label htmlFor="company" className="form-check-label" style={{ color: "#00246B" }}>
-          Company
-        </label>
-      </div>
-      <div className="form-check form-check-inline">
-        <input
-          type="radio"
-          name="role"
-          id="customer"
-          className="form-check-input"
-          value="2"
-          onChange={handleChange}
-          checked={values.role === "2"}
-        />
-        <label htmlFor="customer" className="form-check-label" style={{ color: "#00246B" }}>
-          Customer
-        </label>
-      </div>
-      {errors.role && touched.role && (
-        <span className="text-danger small d-block">{errors.role}</span>
-      )}
-    </div>
+        <div className="mb-3">
+          <label className="form-label d-block" style={{ color: "#00246B" }}>
+            Role:
+          </label>
+          <div className="form-check form-check-inline">
+            <input
+              type="radio"
+              name="role"
+              id="admin"
+              className="form-check-input"
+              value="1"
+              onChange={handleChange}
+              checked={values.role === "1"}
+            />
+            <label htmlFor="admin" className="form-check-label" style={{ color: "#00246B" }}>
+              Admin
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              type="radio"
+              name="role"
+              id="company"
+              className="form-check-input"
+              value="3"
+              onChange={handleChange}
+              checked={values.role === "3"}
+            />
+            <label htmlFor="company" className="form-check-label" style={{ color: "#00246B" }}>
+              Company
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              type="radio"
+              name="role"
+              id="customer"
+              className="form-check-input"
+              value="2"
+              onChange={handleChange}
+              checked={values.role === "2"}
+            />
+            <label htmlFor="customer" className="form-check-label" style={{ color: "#00246B" }}>
+              Customer
+            </label>
+          </div>
+          {errors.role && touched.role && (
+            <span className="text-danger small d-block">{errors.role}</span>
+          )}
+        </div>
 
-    <button
-      className="btn  w-100"
-      style={{ backgroundColor: "#00246B", border: "none", color:"white"}}
-      type="submit"
-      
-    >
-      Register
-    </button>
+        <button
+          className="btn  w-100"
+          style={{ backgroundColor: "#00246B", border: "none", color: "white" }}
+          type="submit"
 
-    <p className="signin text-center mt-3" style={{ color: "#00246B" }}>
-      Already have an account?{" "}
-      <a href="login" style={{ color: "#00246B", fontWeight: "bold" }}>
-        Signin
-      </a>
-    </p>
-  </form>
+        >
+          Register
+        </button>
+
+        <p className="signin text-center mt-3" style={{ color: "#00246B" }}>
+          Already have an account?{" "}
+          <a href="login" style={{ color: "#00246B", fontWeight: "bold" }}>
+            Signin
+          </a>
+        </p>
+      </form>
 
 
       {/* {mutation?.isPending && <Loader />} */}

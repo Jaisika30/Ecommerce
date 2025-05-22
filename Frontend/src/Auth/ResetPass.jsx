@@ -7,9 +7,11 @@ import * as Yup from "yup";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 const resetpass = async (values) => {
-  const id =  localStorage.getItem("id");
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
+  const id = localStorage.getItem("id");
   const resp = await axios.post(
-    `http://localhost:8080/api/user/resetpass/${id}`,
+    `${BASE_URL}/api/user/resetpass/${id}`,
     values
   );
   console.log(resp);
@@ -25,7 +27,7 @@ const validationSchema = Yup.object({
     .required("please enter password"),
 });
 const ResetPass = () => {
-    const navigate= useNavigate(); 
+  const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: (values) => resetpass(values),
     onSuccess: () => {
@@ -36,14 +38,14 @@ const ResetPass = () => {
       });
       localStorage.removeItem("id");
       localStorage.removeItem("otpExpire");
-      localStorage.removeItem("otpHash"); 
+      localStorage.removeItem("otpHash");
       navigate("/login");
     },
   });
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: {
       password: "",
-      cpassword:""
+      cpassword: ""
     },
     validationSchema: validationSchema,
     onSubmit: () => {

@@ -62,9 +62,9 @@ const Home = () => {
   const [isModalFiveVisible, setIsModalFiveVisible] = React.useState(false);
   const [status, setStatus] = React.useState(false);
   const [detail, setDetail] = React.useState("");
-
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
   const getProducts = async () => {
-    const resp = await axios.get("http://localhost:8080/api/product/getall");
+    const resp = await axios.get(`${BASE_URL}/api/product/getall`);
     console.log(resp);
     return resp.data.data;
   };
@@ -84,7 +84,7 @@ const Home = () => {
 
   const addItems = async (body) => {
     const resp = await axios.post(
-      `http://localhost:8080/api/cart/addCart/${userId}`,
+      `${BASE_URL}/api/cart/addCart/${userId}`,
       body
     );
     console.log(resp);
@@ -106,7 +106,7 @@ const Home = () => {
     console.log("body.product_id :>> ", id);
     // const id = body.product_id;
     const resp = await axios.get(
-      `http://localhost:8080/api/cart/getCartItem/${id}`
+      `${BASE_URL}/api/cart/getCartItem/${id}`
     );
     console.log("resp :>> ", resp);
     return resp.data;
@@ -146,7 +146,7 @@ const Home = () => {
     alert("hello cliclked");
     // setStatus("true");
     const ans = await axios.post(
-      "http://localhost:8080/api/wishlist/addWishlist",
+      `${BASE_URL}/api/wishlist/addWishlist`,
       { productId: id, userId: userId, status: status }
     );
     console.log("ans :>> ", ans);
@@ -486,7 +486,7 @@ const Home = () => {
                         height: "200px",
                         marginLeft: "30px",
                       }}
-                      src={`http://localhost:8080/${item.productImg}`}
+                      src={`${BASE_URL}/${item.productImg}`}
                       className="card-img-top"
                       alt="Laptop"
                     />

@@ -4,9 +4,10 @@ import { RiEmotionSadFill } from "react-icons/ri";
 import axios from "axios";
 const Wishlist = () => {
     const queryClient = useQueryClient();
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
 
   const fetchItems = async () => {
-    const ans = await axios.get("http://localhost:8080/api/wishlist/getItem");
+    const ans = await axios.get(`${BASE_URL}/api/wishlist/getItem`);
     // console.log("ans :>> ", ans);
     return ans.data.data;
   };
@@ -17,7 +18,7 @@ const Wishlist = () => {
   });
   console.log("data :>> ", data);
   const deleteItem=async(id)=>{
-    const resp = await axios.post(`http://localhost:8080/api/wishlist/deleteItem/${id}`)
+    const resp = await axios.post(`${BASE_URL}/api/wishlist/deleteItem/${id}`)
     console.log('resp :>> ', resp);
     return resp;
   }
@@ -100,7 +101,7 @@ const Wishlist = () => {
             >
               <div className="card w-100">
                 <img
-                  src={`http://localhost:8080/${item?.productData?.productImg}`}
+                  src={`${BASE_URL}/${item?.productData?.productImg}`}
                   className="card-img-top"
                   alt="Product Image"
                   style={{ height: "200px" }}

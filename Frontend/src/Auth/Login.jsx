@@ -36,10 +36,12 @@ const Login = () => {
   const [value, setValue] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   // const token = localStorage.getItem("token");
   const fetchCartList = async (token) => {
     console.log("hello jass");
-    const ans = await axios.get("http://localhost:8080/api/cart/getItems", {
+    const ans = await axios.get(`${BASE_URL}/api/cart/getItems`, {
       headers: { Authorization: `${token}` },
     });
     console.log(ans.data.data);
@@ -50,7 +52,7 @@ const Login = () => {
   const fetchUserByEmail = async (values) => {
     console.log(values);
     const resp = await axios.post(
-      `http://localhost:8080/api/user/login`,
+      `${BASE_URL}/api/user/login`,
       values
     );
     console.log(resp);

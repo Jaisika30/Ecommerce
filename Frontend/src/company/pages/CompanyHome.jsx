@@ -42,6 +42,7 @@ const CompanyHome = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [speed, setSpeed] = useState(150);
   const [loopCount, setLoopCount] = useState(0);
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
 
   // Memoize token and userId to prevent unnecessary recalculations
   const token = localStorage.getItem("token");
@@ -74,7 +75,7 @@ const CompanyHome = () => {
   // Memoize the getProducts function
   const getProducts = useCallback(async () => {
     try {
-      const resp = await axios.get(`http://localhost:8080/api/product/getallByUserId?userId=${userId}`);
+      const resp = await axios.get(`${BASE_URL}/api/product/getallByUserId?userId=${userId}`);
       return resp.data.data;
     } catch (error) {
       console.error("Error fetching products", error);
@@ -290,7 +291,7 @@ const CompanyHome = () => {
                         height: "200px",
                         marginLeft: "30px",
                       }}
-                      src={`http://localhost:8080/${item.productImg}`}
+                      src={`${BASE_URL}/${item.productImg}`}
                       className="card-img-top"
                       alt="Laptop"
                     />

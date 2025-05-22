@@ -10,19 +10,20 @@ const Address = () => {
   const [showButton, setShowButton] = useState(false);
   const [showId, setShowId] = useState("");
   const token = useSelector((state) => state.userSlice.loginUser.token);
-  const {id} = useParams();
-  console.log('userId :>> ',id);
+  const { id } = useParams();
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+  console.log('userId :>> ', id);
   // console.log(token);
   const navigate = useNavigate();
   const handleclick = () => {
     // const addAddress = 
 
- 
-    navigate("/customer/payment",{state:"test"});
+
+    navigate("/customer/payment", { state: "test" });
   };
   const fetchAddress = async (req, resp) => {
     const response = await axios.get(
-      "http://localhost:8080/api/address/getAddresses",
+      `${BASE_URL}/api/address/getAddresses`,
       {
         headers: { Authorization: `${token}` },
       }

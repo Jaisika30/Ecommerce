@@ -21,17 +21,18 @@ const validationSchema = Yup.object({
   gender: Yup.string().required("please enter gender"),
 });
 const getUser = async (id) => {
- 
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   console.log(id);
-  const resp = await axios.get(`http://localhost:8080/api/user/getone/${id}`);
+  const resp = await axios.get(`${BASE_URL}/api/user/getone/${id}`);
   console.log(resp);
   return resp.data;
 };
 const Edit = () => {
-    const { id } = useParams();
+  const { id } = useParams();
   const { data } = useQuery({
     queryKey: ["user"],
-    queryFn: ()=>getUser(id),
+    queryFn: () => getUser(id),
   });
   console.log(data);
   const { values, errors, touched, handleChange, handleSubmit } = useFormik({

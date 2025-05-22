@@ -16,11 +16,13 @@ const ProfileEdit = (props) => {
 //   if(id == null){
 // <Navigate to={"/"}/>
 //   }
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   const updateDetails = async ({ id, data }) => {
     console.log(id);
     console.log(data);
     const resp = await axios.post(
-      `http://localhost:8080/api/user/update/${id}`,
+      `${BASE_URL}/api/user/update/${id}`,
       data
     );
     console.log(resp);

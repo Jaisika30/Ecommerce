@@ -19,10 +19,12 @@ const forgotpass = async (values) => {
   console.log("values :>> ", values);
   console.log("phone :>> ", values.phone);
   console.log("email :>> ", values.email);
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   // const payload = "";
   if (values.email) {
     console.log("hiiii :>> ");
-    const resp = await axios.post("http://localhost:8080/api/user/forgot", {
+    const resp = await axios.post(`${BASE_URL}/api/user/forgot`, {
       email: values.email,
     });
     console.log(resp);
@@ -30,7 +32,7 @@ const forgotpass = async (values) => {
     return resp;
   } else {
     console.log("heeeeeeeee :>> ");
-    const resp = await axios.post("http://localhost:8080/api/user/forgot", {
+    const resp = await axios.post(`${BASE_URL}/api/user/forgot`, {
       phone: values.phone,
     });
 
@@ -128,18 +130,16 @@ const ForgotPass = () => {
         <div className="d-flex justify-content-center mb-4">
           <button
             type="button"
-            className={`btn btn-outline-primary me-2 ${
-              !showPhoneField ? "active" : ""
-            }`}
+            className={`btn btn-outline-primary me-2 ${!showPhoneField ? "active" : ""
+              }`}
             onClick={() => handleToggleField("email")}
           >
             Email
           </button>
           <button
             type="button"
-            className={`btn btn-outline-primary ${
-              showPhoneField ? "active" : ""
-            }`}
+            className={`btn btn-outline-primary ${showPhoneField ? "active" : ""
+              }`}
             onClick={() => handleToggleField("phone")}
           >
             Phone

@@ -12,19 +12,21 @@ import { Navigate } from "react-router-dom";
 const DeleteAccount = (props) => {
   const [reason, setReason] = useState("");
   const [reasonId, setReasonId] = useState("");
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   // const detail= localStorage.getItem("details");
   // const detailData= JSON.parse(detail);
   // console.log(detailData._id);
   // const id=detailData._id;
   const getReason = async () => {
-    const resp = await axios.get("http://localhost:8080/api/admin/getAll");
+    const resp = await axios.get(`${BASE_URL}/api/admin/getAll`);
     console.log(resp);
     return resp.data.data;
   };
   const deleteAccount = async () => {
     console.log(reasonId);
     const resp = await axios.post(
-      `http://localhost:8080/api/user/deleteAccount/${id}`,
+      `${BASE_URL}/api/user/deleteAccount/${id}`,
       { reasonId }
     );
     console.log(resp);
@@ -50,7 +52,7 @@ const DeleteAccount = (props) => {
           button: "okk!",
         });
         localStorage.removeItem("token");
-        <Navigate to={"/"}/>
+        <Navigate to={"/"} />
       }
     },
   });

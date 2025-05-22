@@ -11,16 +11,17 @@ import swal from "sweetalert";
 import Table from "react-bootstrap/Table";
 
 const addReason = async (data) => {
+  const BASE_URL= process.env.REACT_PUBLIC_URL;
   console.log(data);
   const resp = await axios.post(
-    "http://localhost:8080/api/admin/addreason",
+    `${BASE_URL}/api/admin/addreason`,
     data
   );
   console.log(resp.data);
   return resp.data;
 };
 const getReasons = async () => {
-  const resp = await axios.get("http://localhost:8080/api/admin/getAll");
+  const resp = await axios.get(`${BASE_URL}/api/admin/getAll`);
   console.log(resp.data.data);
   return resp.data.data;
 };

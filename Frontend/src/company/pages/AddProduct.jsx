@@ -55,9 +55,11 @@ const AddProduct = () => {
   const [preview, setPreview] = useState(null);
   const id = useSelector((state) => state.userSlice.loginUser.data._id);
   console.log(id);
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   const addProduct = async (values) => {
     const resp = await axios.post(
-      `http://localhost:8080/api/product/addProduct/${id}`,
+      `${BASE_URL}/api/product/addProduct/${id}`,
       values
     );
     console.log(resp);

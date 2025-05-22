@@ -21,8 +21,10 @@ const Admin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(5);
   console.log('pageCount :>> ', pageCount);
+  const BASE_URL = process.env.REACT_PUBLIC_URL;
+
   const fetchAll = async () => {
-    const resp = await axios.get("http://localhost:8080/api/user/getall", {
+    const resp = await axios.get(`${BASE_URL}/api/user/getall`, {
       params: {
         limit: 3,
         page: currentPage,
