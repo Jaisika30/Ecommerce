@@ -4,7 +4,7 @@ import { RiEmotionSadFill } from "react-icons/ri";
 import axios from "axios";
 const Wishlist = () => {
     const queryClient = useQueryClient();
-  const BASE_URL = process.env.VITE_API_URL;
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const fetchItems = async () => {
     const ans = await axios.get(`${BASE_URL}/api/wishlist/getItem`);

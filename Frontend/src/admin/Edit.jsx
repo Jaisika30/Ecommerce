@@ -21,7 +21,7 @@ const validationSchema = Yup.object({
   gender: Yup.string().required("please enter gender"),
 });
 const getUser = async (id) => {
-  const BASE_URL = process.env.VITE_API_URL;
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   console.log(id);
   const resp = await axios.get(`${BASE_URL}/api/user/getone/${id}`);

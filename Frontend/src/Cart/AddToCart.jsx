@@ -29,7 +29,7 @@ const AddToCart = () => {
   const [total, setTotal] = useState(0);
   const [quantity, setQuantity] = useState([]);
   const queryClient = useQueryClient();
-  const BASE_URL = process.env.VITE_API_URL;
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   // const [quantity, setQuantity] = useState([]);
 

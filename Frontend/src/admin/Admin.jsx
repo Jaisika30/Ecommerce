@@ -21,7 +21,7 @@ const Admin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(5);
   console.log('pageCount :>> ', pageCount);
-  const BASE_URL = process.env.VITE_API_URL;
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const fetchAll = async () => {
     const resp = await axios.get(`${BASE_URL}/api/user/getall`, {
