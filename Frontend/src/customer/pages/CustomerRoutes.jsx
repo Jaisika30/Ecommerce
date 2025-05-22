@@ -4,7 +4,7 @@ import Home from "../../Home";
 import Address from "../../Cart/Address";
 import AddToCart from "../../Cart/AddToCart";
 import Payment from "../../Cart/Payment";
-import Wishlist from "../../Cart/wishlist";
+import Wishlist from "../../Cart/Wishlist";
 
 const CustomerRoutes = () => {
   return (
