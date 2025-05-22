@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 const resetpass = async (values) => {
-  const BASE_URL = process.env.REACT_PUBLIC_URL;
+  const BASE_URL = process.env.REACT_APP_API_URL;
 
   const id = localStorage.getItem("id");
   const resp = await axios.post(

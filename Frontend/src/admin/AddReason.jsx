@@ -11,7 +11,7 @@ import swal from "sweetalert";
 import Table from "react-bootstrap/Table";
 
 const addReason = async (data) => {
-  const BASE_URL= process.env.REACT_PUBLIC_URL;
+  const BASE_URL= process.env.REACT_APP_API_URL;
   console.log(data);
   const resp = await axios.post(
     `${BASE_URL}/api/admin/addreason`,

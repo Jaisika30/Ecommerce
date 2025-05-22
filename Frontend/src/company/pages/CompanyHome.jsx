@@ -42,7 +42,7 @@ const CompanyHome = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [speed, setSpeed] = useState(150);
   const [loopCount, setLoopCount] = useState(0);
-  const BASE_URL = process.env.REACT_PUBLIC_URL;
+  const BASE_URL = process.env.REACT_APP_API_URL;
 
   // Memoize token and userId to prevent unnecessary recalculations
   const token = localStorage.getItem("token");
