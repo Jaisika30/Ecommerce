@@ -29,7 +29,7 @@ const paymentIntents=async(amount,cardId,custId)=>{
     payment_method:cardId,
     customer:custId,
     confirm:true,
-    return_url:"http://localhost:5173/customer/home"
+    return_url:"https://ecommerce-seven-tau-25.vercel.app/customer/home"
   });
   return paymentIntent;
 }

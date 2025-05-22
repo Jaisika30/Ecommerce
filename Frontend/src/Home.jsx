@@ -27,7 +27,7 @@ import fashion1 from "../../Frontend/images/Fashion1.jpeg.jpg"
 import fashion2 from "../../Frontend/images/Fashion2.jpeg.jpg"
 
 import fashion3 from "../../Frontend/images/Fashion3.jpeg.jpg"
-
+import logo from"../images/logo.jpg"
 {
   /* <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" /> */
 }
@@ -193,7 +193,7 @@ const Home = () => {
             {/* Navbar brand */}
             <a className="navbar-brand mt-2 mt-lg-0" href="#">
               <img
-                src="/images/logo.jpg"
+                src={logo}
                 height="60"
                 width={"60px"}
                 alt="MDB Logo"
