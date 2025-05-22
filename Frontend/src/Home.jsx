@@ -31,7 +31,7 @@ import logo from"../images/logo.jpg"
 {
   /* <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" /> */
 }
-
+import profile from "../images/profile.png"
 const Home = () => {
   const [show, setShow] = useState(false);
   const [showData, setShowData] = useState("");
@@ -277,7 +277,7 @@ const Home = () => {
                 aria-expanded="false"
               >
                 <img
-                  src="\images\profile.png"
+                  src={profile}
                   className="rounded-circle"
                   height="40"
                   width={"40px"}
