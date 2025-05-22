@@ -100,8 +100,8 @@ const ProfileEdit = (props) => {
       <Modal.Header closeButton>
         <Modal.Title>Update Details</Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ maxWidth: "100%", padding: "20px" }}>
-        <Form>
+      <Modal.Body >
+        <Form style={{ maxWidth: "80%" }}>
           <Form.Group className="mb-3">
             <Form.Label>Name</Form.Label>
             <Form.Control
