@@ -37,7 +37,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const BASE_URL = process.env.REACT_APP_API_URL;
-
+  console.log("baseeeeeeeeeeeeeeee urlllllllllllllll:::", BASE_URL)
   // const token = localStorage.getItem("token");
   const fetchCartList = async (token) => {
     console.log("hello jass");
