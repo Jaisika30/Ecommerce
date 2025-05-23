@@ -64,3 +64,11 @@ For backend (Node.js)
 cd Backend
 npm install
 npm start
+![Homepage Screenshot](screenshot/Updateprofile.png)
+![Homepage Screenshot](screenshot/Addaddress.png)
+![Homepage Screenshot](screenshot/Addproduct.png)
+![Homepage Screenshot](screenshot/Addtocart.png)
+![Homepage Screenshot](screenshot/Companyhome.png)
+![Homepage Screenshot](screenshot/Forusershome.png)
+![Homepage Screenshot](screenshot/Companyproducts.png)
+
