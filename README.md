@@ -64,6 +64,8 @@ For backend (Node.js)
 cd Backend
 npm install
 npm start
+![Homepage Screenshot](screenshots/Home.png)
+![Homepage Screenshot](screenshots/Signin.png)
 ![Homepage Screenshot](screenshots/Companyhome.png)
 ![Homepage Screenshot](screenshots/Companyproducts.png)
 ![Homepage Screenshot](screenshots/Forusershome.png)
